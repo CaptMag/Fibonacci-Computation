@@ -1,0 +1,8 @@
+Project list from "Understanding Fibonacci"
+
+Add the python source code, explain what the code does
+Clarify why Closed-Form Solution is faster than Linear Reccurence
+Mention other algorithms such as FFT, DFT, Karatsuba, Binet and Galios theory
+try to add SIMD
+Use the video as help and a reference
+don't make it too long nor complex
