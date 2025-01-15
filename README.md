@@ -1,4 +1,7 @@
 # Fibonacci-Computation
+
+Inspired by a video I watched, I will explain the following:
+
 How Fibonacci is created, what formula it uses to work, and computing the largest Fibonacci number in 1 second using different algorithms and formulas
 
 Currently a work in progress document. Focusing currently on Linear Reccurence and Closed-Form Solution.
