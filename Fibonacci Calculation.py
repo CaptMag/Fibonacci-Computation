@@ -18,7 +18,7 @@ while time.perf_counter() - lap < 1:
     fibonacci_recursive(n)
     n += 1
 
-print(f"Linear Reccurence has reached the {n - 1}st Fibonacci Number!")
+print(f"Linear Recurrence has reached the {n - 1}st Fibonacci Number!")
 
 # End result: 31st Fibonacci Number
 
