@@ -8,4 +8,6 @@ Currently a work in progress document. Focusing currently on Linear Reccurence a
 
 Future plans include Fourier Transform (DFT and FFT), Galois Theory, Karatsuba, and maybe 1 more.
 
-Current results: [Linear Reccurence: 254,487th Fibonacci Number] [Closed-Form Solution: 3,643,532 Fibonacci Number]
+Current results: [Linear Recurrence: 31st Fibonacci Number] [Binet's Formula: 785-805th Fibonacci Number]
+
+Currently added `sympy` import, however, fluctuation is undergoing due to this
