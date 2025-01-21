@@ -1,62 +1,65 @@
-import time
 import math
 import sys
+import time
+from sympy import S, sqrt
 
-# Time: Used to track the elapsed time for each algorithm
-#Math: provides math functions
-#sys: used to configure internal limits (large integers)
+lap = time.perf_counter()
 
-# Increase the max string digits limit for large integers
-sys.set_int_max_str_digits(10**6)  # Increase the limit to 1 million digits
+def fibonacci_recursive(n):
+    if n <= 1:
+        return n
+    else:
+        return fibonacci_recursive(n - 1) + fibonacci_recursive(n - 2)
+    
+n = 0
 
-def linear_recurrence(limit):
-    """Compute the largest Fibonacci number within the time limit using linear recurrence."""
-    start_time = time.time()  # Record the start time
-    F_0, F_1 = 0, 1  # Initialize the first two Fibonacci numbers
-    n = 1  # Start counting from the first Fibonacci number
+while time.perf_counter() - lap < 1:
 
-    while time.time() - start_time < limit:  # Continue until the time limit is reached
-        F_next = F_0 + F_1  # Compute the next Fibonacci number
-        F_0, F_1 = F_1, F_next  # Update for the next iteration
-        n += 1  # Increment the index
+    fibonacci_recursive(n)
+    n += 1
 
-    return n - 1, math.log10(F_0) if F_0 > 0 else 0  # Return the largest index and log10 of the Fibonacci number
+print(f"Linear Reccurence has reached the {n - 1}st Fibonacci Number!")
 
-# The purpose of this is to keep computing fibonacci numbers (for linear reccurence) until the time has stopped.
-#Instead of representing a large number, it gives tthe logarithmic value, making it much smaller
+# End result: 31st Fibonacci Number
 
-def closed_form(limit):
-    """Compute the largest Fibonacci number within the time limit using the closed-form solution."""
-    start_time = time.time()
-    sqrt_5 = math.sqrt(5)  # Calculate √5
-    phi = (1 + sqrt_5) / 2  # Calculate the golden ratio (φ)
+#def Quadratic_Example(a, b, c):
+
+#    inside = b**2 - 4*a*c
+
+#    if inside < 0:
+#        return "No Solution"
+
+#    root1 = (- b + math.sqrt(inside)) / (a * 2)
+#    root2 = (- b - math.sqrt(inside)) / (a * 2)
+
+#    return root1, root2
+
+#a, b, c = 1, 5, 3
+
+#solutions = Quadratic_Example(a, b, c)
+
+#print (solutions)
+
+def Binet_Formula(limit):
+
+    golden_ratio = (S(1) + math.sqrt(5)) / (2)
+    conjugate = (S(1) - math.sqrt(5)) / (2)
+
+    lap = time.perf_counter()
 
     n = 0
-    log_phi = math.log10(phi)  # Precompute log10(φ)
-    log_sqrt_5 = math.log10(sqrt_5)  # Precompute log10(√5)
+    calculation = 0
 
-    while time.time() - start_time < limit:  # Continue until the time limit is reached
-        log_F_n = n * log_phi - log_sqrt_5  # Compute log10(F_n) using Binet's formula
-        n += 1  # Increment the index
+    while time.perf_counter() - lap < limit:
 
-    return n - 1, log_F_n  # Return the largest index and log10 of the Fibonacci number
+        calculation = (golden_ratio ** n - conjugate ** n) / math.sqrt(5)
 
-#The purpose of this is to use Binet's formula to compute fibonacci numbers directly into logarithmic form.
-#  This is also more efficient than linear reccurence as it avoids repetition
+        calculation = round(calculation)
 
-def main():
-    time_limit = 1  # 1 second
+        n += 1
 
-    print("Running Linear Recurrence...")
-    linear_n, linear_log_fib = linear_recurrence(time_limit)
-    print(f"Linear Recurrence: Largest Fibonacci index = {linear_n}, log10(value) = {linear_log_fib:.2f}")
+    
+    print(f"Binet's Formula has reached the({n - 1}th) Fibonacci Number!")
 
-    print("\nRunning Closed-Form Solution...")
-    closed_n, closed_log_fib = closed_form(time_limit)
-    print(f"Closed-Form: Largest Fibonacci index = {closed_n}, log10(value) = {closed_log_fib:.2f}")
 
-# runs the iterative fibonacci algorithm, outputs largest index of (N)
-# also runs the closed-form algorithm. Also outputs the largest index of (N)
-
-if __name__ == "__main__":
-    main()
+Binet_Formula(1)
