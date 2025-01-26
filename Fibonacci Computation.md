@@ -74,3 +74,85 @@ Now that we have everything set, we must transfer everything to the other side, 
 $$r^2 - r -1 = 0$$
 
 Now due to not being able to factor this, we must use the quadratic formula
+
+$$r = \frac{-(-1) \pm \sqrt{(-1)^2 - 4(1)(-1)}}{2(1)} = \frac{1 \pm \sqrt{5}}{2}$$
+
+Once we have found the solution of the quadratic we will use the golden ratio and the conjugate of the golden ratio to further calculate the fibonacci sequence using **Binet's Formula**
+
+$$
+\quad \text{Golden Ratio } \frac{1 + \sqrt{5}}{2}
+\quad \text{and Conjugate } \frac{1 - \sqrt{5}}{2}
+$$
+
+Now that we have both, how can this be faster than **Linear Recurrence**?
+
+Due to the golden ratio and conjugate rapidly growing compared the Linear Recurrence, this allows Binet's Formula to reach much larger numbers.  
+Using this equation:
+
+$$ F_n = F_(n-1) + F_(n-2)$$
+
+This means we must calculate the 2 previous fibonacci numbers in order to get the current number, however with Binet's Formula we can do the same thing, but with fewer multiplication, exponentials and division.
+
+$$ F_n = \frac{\phi^n - \psi^n}{\sqrt{5}} $$
+
+Using this equation we can compute F(n) to exponential large numbers compared to a basic Linear Recurrence output. However, not everything is perfect, and with Binet's Formula comes percision errors, as it is not perfect when calculating an exact result.
+
+Now how would this work in Python? Using the code below, we are able to calculate the largest Fibonacci number using Linear Recurrence in 1 second
+
+```python
+import math
+import sys
+import time
+from sympy import S, sqrt
+
+lap = time.perf_counter()
+
+def fibonacci_recursive(n):
+    if n <= 1:
+        return n
+    else:
+        return fibonacci_recursive(n - 1) + fibonacci_recursive(n - 2)
+    
+n = 0
+
+while time.perf_counter() - lap < 1:
+
+    fibonacci_recursive(n)
+    n += 1
+
+print(f"Linear Recurrence has reached the {n - 2}st Fibonacci Number!")
+```
+
+Although very simple, it clearly shows the calculation, using the last 2 terms to calculate the new term, all while under a 1 second time constraint.  
+Unfortunately, this only gets us the 31st fibonacci number, quite pathetic compared to how large numbers can go.  
+Now that we realize the lack of efficiency, it is time to try out Binet's Formula
+
+```python
+def Binet_Formula(limit):
+
+    golden_ratio = (S(1) + math.sqrt(5)) / (2)
+    conjugate = (S(1) - math.sqrt(5)) / (2)
+
+    laps = time.perf_counter()
+
+    x = 0
+    calculation = 0
+
+    while time.perf_counter() - laps < limit:
+
+        calculation = (golden_ratio ** x - conjugate ** x) / math.sqrt(5)
+
+        calculation = round(calculation)
+
+        x += 1
+
+    
+    print(f"Binet's Formula has reached the({x - 1}th) Fibonacci Number!")
+
+
+Binet_Formula(1)
+```
+
+Looking at this code, we are able to efficiently calculate the fibonacci sequence with minimal time delay and calculation. However, this comes with its own problems.  
+After running this code, we reach around the 785th to 805th fibonacci number, while much higher than 31, it lacks percision and often varies depending on performance.  
+This is also quite little compared to how large we can truly go, and with that we introduce *memoization* additions to our code.
