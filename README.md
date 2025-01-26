@@ -11,3 +11,6 @@ Future plans include Fourier Transform (DFT and FFT), Galois Theory, Karatsuba, 
 Current results: [Linear Recurrence: 31st Fibonacci Number] [Binet's Formula: 785-805th Fibonacci Number]
 
 Currently added `sympy` import, however, fluctuation is undergoing due to this
+
+Added Memoization which allows a "cache" to be saved of previous computed Fibonacci results inside the `memo` library. Currently standing at the `125,089 Fibonacci Term`
+Still working on the fluctuation problem
