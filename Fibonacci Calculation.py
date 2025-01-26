@@ -63,3 +63,31 @@ def Binet_Formula(limit):
 
 
 Binet_Formula(1)
+
+start = time.perf_counter()
+
+def memoization(a, memo={}):
+    if a in memo:
+        return memo[a]
+    
+    if a <= 1:
+        return a
+    memo[a] = memoization(a - 1, memo) + memoization(a - 2, memo) 
+    return memo[a]
+
+a = 0
+
+while time.perf_counter() - start < 1:
+
+    memoization(a)
+    a += 1
+
+print(f'Memoization calculated the {a}th Fibonacci term!')
+
+#if __name__ == '__main__':
+#    start = time.perf_counter()
+#    f = memoization(30)
+#    end = time.perf_counter()
+
+#    print(f)
+#    print(f'Time: {end - start} seconds')
