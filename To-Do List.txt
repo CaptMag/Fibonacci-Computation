@@ -6,3 +6,10 @@ Mention other algorithms such as FFT, DFT, Karatsuba, Binet and Galios theory
 try to add SIMD
 Use the video as help and a reference
 don't make it too long nor complex
+
+1/27/2025:
+Explain Time Complexity and Space Complextiy (at the end)
+Add Space-Optimized Iterations, Generators, Fast Doubling and Matric Exponentiation.
+Start using FFT and adding Discrete additions into our code
+Fix fulctuations
+try other methods and start research on the new topics.
