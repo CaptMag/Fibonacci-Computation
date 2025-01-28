@@ -155,4 +155,82 @@ Binet_Formula(1)
 
 Looking at this code, we are able to efficiently calculate the fibonacci sequence with minimal time delay and calculation. However, this comes with its own problems.  
 After running this code, we reach around the 785th to 805th fibonacci number, while much higher than 31, it lacks percision and often varies depending on performance.  
-This is also quite little compared to how large we can truly go, and with that we introduce *memoization* additions to our code.
+This is also quite little compared to how large we can truly go, and with that we introduce top-down and bottom-up approaches to our code.
+
+## Memoization and Top-Down Approach
+
+We have used both **recursion and Binet's Formula (or Closed-Form Solution)** to compute the largest fibonacci number we can in 1 second.  
+Although working well, we have not even stratched the surface of how large fibonacci numbers can go, and although the 800+ fibonacci number is a big number, it is nothing compared to the hundreds of thousands of fibonacci numbers we can compute in a limited time.
+
+### What is a Top Down Approach
+
+A top down approach starts by using the original problem and breaking it down into smaller sub-problems. In our case, we are trying to find F(n) and to do that we must go from **top to bottom** and recursively compute F(n-1) and F(n-2).
+
+Now how is this different from Linear Recurrence? Well, they are very identical, however, **memoization** uses a **lazy evaluation** meaning they only compute sub-problems when needed.  
+By doing this, they can save already computes fibonacci numbers into a cache (or dictionary) and reuse them when needed.
+
+```bash
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34... N]
+```
+
+Following the example above, it will store previously calculated fibonacci numbers, and use them when needed, rather than constantly re-computing the numbers.
+
+```python
+def memoization(a, memo={}):
+    if a in memo:
+        return memo[a]
+    
+    if a <= 1:
+        return a
+    memo[a] = memoization(a - 1, memo) + memoization(a - 2, memo) 
+    return memo[a]
+
+a = 0
+
+while time.perf_counter() - start < 1:
+
+    memoization(a)
+    a += 1
+
+print(f'Memoization calculated the {a}th Fibonacci term!')
+```
+
+Looking at the Python code here, we can see the dictionary `memo` which saved previously computed fibonacci numbers, and reuses them when computing new ones.  
+This small addition skyrockets our results, from a measly 805 to over 125 thousand!  
+But like everything, there is always room for improvement, and this is where a Bottom-up approach comes in.
+
+## Tabulation and Bottom-Up Approach
+
+Similar to a Top-Down Approach, a **Bottom-Up Approach** starts from the smallest sub problem and builds its way up to the original problem. It stores these results in a table for reuse.  
+Now although this seems identical to a Top-Down Approach there is 1 tweak you can do than will make a major difference. That is deleting un-used subproblems.  
+Rather than keeping old subproblems it instead deletes them and only calculates the previous two fibonacci numbers, creating an endless loop.  
+Using this, the program is much simpler and efficient, and there is no need to save nor re-calculate previous fibonacci terms, as the program only needs to calculate the previous 2, get the new term, and then repeat the process, deleting the ones that are not used.
+
+### Python Tabulation
+
+```python
+def tabulation():
+    
+    prev = 0
+    cur = 1
+    iteration = 0
+
+    starts = time.perf_counter()
+
+    while time.perf_counter() - starts < 1:
+
+        prev, cur = cur, prev + cur
+
+        iteration += 1
+
+    
+    print(f'Tabulation reached the {iteration}th Fibonacci Number!')
+    return cur
+
+tabulation()
+```
+
+Compared to most of our code, this is the most simple one. It uses the set parameters of `prev (previous)` and `cur (current)` to store in the fibonacci numbers of F(n-1) and F(n-2).
+
+This then sets a new parameter ``prev, cur = cur, prev + cur`` which sets `prev` into `cur` and `cur` into the soltuion of `prev + cur`, thus minimizing storage and latency.  
+With this new code, we are able to compute to over 250 thousand Fibonacci Numbers! However, we can still go a lot more deeper and create larger fibonacci numbers...
