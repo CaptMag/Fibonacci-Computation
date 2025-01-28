@@ -91,3 +91,23 @@ print(f'Memoization calculated the {a}th Fibonacci term!')
 
 #    print(f)
 #    print(f'Time: {end - start} seconds')
+
+def tabulation():
+    
+    prev = 0
+    cur = 1
+    iteration = 0
+
+    starts = time.perf_counter()
+
+    while time.perf_counter() - starts < 1:
+
+        prev, cur = cur, prev + cur
+
+        iteration += 1
+
+    
+    print(f'Tabulation reached the {iteration}th Fibonacci Number!')
+    return cur
+
+tabulation()
