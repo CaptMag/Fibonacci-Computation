@@ -30,8 +30,13 @@ if len(nums) != row * columns:
     print("Error: Incorrect number of values entered!")
     exit()
 
-matrix_A = [nums[i * columns:(i + 1) * columns] for i in range(row)]
-matrix_B = [nums[i * columns:(i + 1) * columns] for i in range(row)]
+print(f"Enter {row * columns} numbers for Matrix A:")
+nums_A = list(map(int, input().split()))
+matrix_A = [nums_A[i * columns:(i + 1) * columns] for i in range(row)]
+
+print(f"Enter {columns * row} numbers for Matrix B:")
+nums_B = list(map(int, input().split()))
+matrix_B = [nums_B[i * row:(i + 1) * row] for i in range(columns)]
 
 result = [[sum(matrix_A * matrix_B for matrix_A, matrix_B in zip(matrix_A_row, matrix_B_columns))
            for matrix_B_columns in zip(*matrix_B)]
